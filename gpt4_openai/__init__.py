@@ -3,7 +3,7 @@ from time import sleep
 
 from langchain.llms.base import LLM
 
-from driver import ChatGptDriver
+from .driver import ChatGptDriver
 
 class GPT4OpenAI(LLM):
 
@@ -12,22 +12,8 @@ class GPT4OpenAI(LLM):
     chatbot : Optional[ChatGptDriver] = None
     call : int = 0
     conversation : Optional[str] = ""
-
-    def __init__(self, token: str, headless=True, **kwargs):
-        """
-        Created a LLM model that uses OpenAI chat via selenium driver.
-
-        Args:
-            token: __Secure-next-auth.session-token token from chat.openai.com
-            headless: Whether the chromium browser should be hidden or not.
-        """
-        self.token = token
-        self.history_data = []
-        self.chatbot = None
-        self.call = 0
-        self.conversation = ""
-        self.headless = headless
-        super().__init__(**kwargs)
+    headless : bool = True
+    __file__ = __file__
 
     #### WARNING : for each api call this library will create a new chat on chat.openai.com
     @property
