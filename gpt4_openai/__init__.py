@@ -42,7 +42,7 @@ class GPT4OpenAI(LLM):
             raise ValueError("You have reached the maximum number of requests per hour ! Help me to Improve. Abusing this tool is at your own risk")
         else:
             sleep(2)
-            data = self.chatbot.send_message(prompt)
+            data = self.chatbot.send_message(prompt, model='gpt4')
             #print(data)
             response = data["message"]
             self.conversation = data["conversation_id"]
