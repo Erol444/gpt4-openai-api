@@ -44,6 +44,7 @@ dmypy.json
 build/
 dist/
 *.egg-info/
+.pypirc
 
 # OS generated files
 .DS_Store

@@ -14,6 +14,7 @@ class GPT4OpenAI(LLM):
     conversation : Optional[str] = ""
     headless : bool = True
     __file__ = __file__
+    model: str = "gpt-4"
 
     #### WARNING : for each api call this library will create a new chat on chat.openai.com
     @property
@@ -30,9 +31,9 @@ class GPT4OpenAI(LLM):
                 raise ValueError("Need a token , check https://chat.openai.com/api/auth/session for get your token")
             else:
                 if self.conversation == "":
-                    self.chatbot = ChatGptDriver(self.token, headless=self.headless)
+                    self.chatbot = ChatGptDriver(self.token, headless=self.headless, model=self.model)
                 elif self.conversation != "" :
-                    self.chatbot = ChatGptDriver(self.token, headless=self.headless, conversation_id=self.conversation)
+                    self.chatbot = ChatGptDriver(self.token, headless=self.headless, model=self.model, conversation_id=self.conversation)
                 else:
                     raise ValueError("Something went wrong")
 
@@ -42,7 +43,7 @@ class GPT4OpenAI(LLM):
             raise ValueError("You have reached the maximum number of requests per hour ! Help me to Improve. Abusing this tool is at your own risk")
         else:
             sleep(2)
-            data = self.chatbot.send_message(prompt, model='gpt4')
+            data = self.chatbot.send_message(prompt)
             #print(data)
             response = data["message"]
             self.conversation = data["conversation_id"]

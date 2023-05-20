@@ -4,6 +4,8 @@
 
 Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. It uses [selenium webdriver](https://www.selenium.dev/) to emulate user interaction on [chat.openai.com](chat.openai.com). If the account has `ChatGPT Plus`, the driver **will use GPT-4**, otherwise it will use the default GPT-3.5.
 
+It supports both **GPT4 browser and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4-browsing')`, or `model='gpt-4-plugins'`.
+
 **Note:** This unofficial API library is not endorsed by OpenAI and violates their Terms of Service. Use it at your own risk; the creator assumes no liability for any consequences. Please adhere to platform's ToS and exercise caution with unofficial resources.
 
 The core logic was taken from the [IntelligenzaArtificiale/Free-Auto-GPT](https://github.com/IntelligenzaArtificiale/Free-Auto-GPT).
@@ -18,13 +20,25 @@ The core logic was taken from the [IntelligenzaArtificiale/Free-Auto-GPT](https:
 from gpt4_openai import GPT4OpenAI
 
 # Token is the __Secure-next-auth.session-token from chat.openai.com
-llm = GPT4OpenAI(token=my_session_token, headless=False)
+llm = GPT4OpenAI(token=my_session_token, headless=False, model='gpt-4')
 # GPT3.5 will answer 8, while GPT4 should be smart enough to answer 10
 response = llm('If there are 10 books in a room and I read 2, how many books are still in the room?')
 print(response)
 ```
 
 As seen on the demo gif (above), GPT-4 answers correctly.
+
+## Browsing support
+
+```python
+from gpt4_openai import GPT4OpenAI
+
+# Token is the __Secure-next-auth.session-token from chat.openai.com
+llm = GPT4OpenAI(token=my_session_token, headless=False, model='gpt-4-browsing')
+# ChatGPT will first browse the web for the name/age of her boyfriend, then return the answer
+response = llm('What is the age difference between Dua Lipa and her boyfriend?')
+print(response)
+```
 
 ## Langchain support
 
