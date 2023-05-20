@@ -40,10 +40,8 @@ chatgpt_chats_list_first_node = (
     "//li[@class='relative z-[15]']//a",
 )
 
-model_selector = (By.XPATH, "//button[starts-with(@id, 'headlessui-listbox-button')]")
-gpt4_selector = (By.XPATH, "//ul[@role='listbox']/li[contains(.//text(), 'GPT-4')][1]")
-
-chatgpt_chat_url = 'https://chat.openai.com'
+stop_generating = (By.XPATH, "//button[contains(., 'Stop generating')]")
+regenerate_response = (By.XPATH, "//button[contains(., 'Regenerate response')]")
 
 
 class ChatGptDriver:
@@ -61,6 +59,7 @@ class ChatGptDriver:
         login_cookies_path: str = '',
         captcha_solver: str = 'pypasser',
         solver_apikey: str = '',
+        model: str = 'gpt4',
         proxy: str = None,
         chrome_args: list = [],
         moderation: bool = True,
@@ -98,6 +97,9 @@ class ChatGptDriver:
         self.__moderation = moderation
         self.__headless = headless
 
+        self._model = model
+        self._chatgpt_chat_url = 'https://chat.openai.com'
+
         if not self.__session_token and (
             not self.__email or not self.__password or not self.__auth_type
         ):
@@ -132,6 +134,9 @@ class ChatGptDriver:
 
         self.__init_browser()
         weakref.finalize(self, self.__del__)
+
+    def _get_url(self):
+        return f"{self._chatgpt_chat_url}/?model={self._model}"
 
     def __del__(self):
         '''
@@ -236,7 +241,8 @@ class ChatGptDriver:
         self.__ensure_cf()
 
         self.logger.debug('Opening chat page...')
-        self.driver.get(f'{chatgpt_chat_url}/{self.__conversation_id}')
+        self.driver.get(self._get_url())
+        # self.driver.execute_script("window.localStorage.setItem('oai/apps/hasSeenOnboarding/chat', '2023-05-15')")
         self.__check_blocking_elements()
 
         self.__is_active = True
@@ -379,7 +385,7 @@ class ChatGptDriver:
         Check for blocking elements and dismiss them
         '''
         self.logger.debug('Looking for blocking elements...')
-        
+
         try:
             # FInd a button to dismiss the dialog with class="btn relative btn-primary" inside the div[@role="dialog"]
             btn_to_dismiss = WebDriverWait(self.driver, 5).until(
@@ -390,7 +396,7 @@ class ChatGptDriver:
                 self.driver.execute_script('arguments[0].click()', btn_to_dismiss)
         except:
             pass
-        
+
         try:
             # for 3 times
             i = 0
@@ -431,7 +437,7 @@ class ChatGptDriver:
             if not result_streaming:
                 break
 
-    def send_message(self, message: str, stream: bool = False, model: str = "default") -> dict:
+    def send_message(self, message: str, stream: bool = False) -> dict:
         '''
         Send a message to ChatGPT\n
         :param message: Message to send
@@ -448,23 +454,6 @@ class ChatGptDriver:
             )
         except SeleniumExceptions.ElementClickInterceptedException():
             pass
-
-        # If we have paid access, we should select GPT4 model
-        try:
-            if model == "gpt4":
-                self.logger.debug('Trying to select model...')
-                WebDriverWait(self.driver, 3).until(
-                    EC.presence_of_element_located(model_selector)
-                ).click()
-                self.logger.debug('Paid access detected, selecting GPT4 model...')
-                self.__sleep(1.0)
-                WebDriverWait(self.driver, 3).until(
-                    EC.presence_of_element_located(gpt4_selector)
-                ).click()
-                self.logger.debug('GPT4 model selected')
-        except SeleniumExceptions.TimeoutException:
-            print(">>> WARNING <<<\n>> You don't have paid access to GPT4, using default model...")
-            self.logger.debug('Paid access not detected, using default model...')
 
         self.logger.debug('Sending message...')
         try:
@@ -495,11 +484,25 @@ class ChatGptDriver:
                 print(i, end='')
                 self.__sleep(0.1)
             return print()
+        
+        # Check whether GPT is generating the result
+        # WebDriverWait(self.driver, 1).until_not(
+        #     EC.presence_of_element_located(stop_generating)
+        # )
 
         self.logger.debug('Waiting for completion...')
-        WebDriverWait(self.driver, 120).until_not(
-            EC.presence_of_element_located(chatgpt_streaming)
+        WebDriverWait(self.driver, 20).until(
+            # When the "Stop generating" button is gone, it means the generation is done
+            EC.presence_of_element_located(stop_generating)
         )
+
+        try:
+            WebDriverWait(self.driver, 100).until(
+                # When the "Regenerate response" button is available, it means the generation is done
+                EC.presence_of_element_located(regenerate_response)
+            )
+        except SeleniumExceptions.NoSuchElementException:
+            self.logger.debug('Regenerate response button not found!')
 
         self.logger.debug('Getting response...')
         responses = self.driver.find_elements(*chatgpt_big_response)
@@ -513,7 +516,7 @@ class ChatGptDriver:
         content = markdownify(response.get_attribute('innerHTML')).replace(
             'Copy code`', '`'
         )
-                
+
         pattern = re.compile(
             r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
         )
@@ -548,7 +551,7 @@ class ChatGptDriver:
         '''
         Reset the conversation
         '''
-        if not self.driver.current_url.startswith(chatgpt_chat_url):
+        if not self.driver.current_url.startswith(self._chatgpt_chat_url):
             return self.logger.debug('Current URL is not chat page, skipping reset')
 
         self.logger.debug('Resetting conversation...')
@@ -562,7 +565,7 @@ class ChatGptDriver:
         '''
         Clear all conversations
         '''
-        if not self.driver.current_url.startswith(chatgpt_chat_url):
+        if not self.driver.current_url.startswith(self._chatgpt_chat_url):
             return self.logger.debug('Current URL is not chat page, skipping clear')
 
         self.logger.debug('Clearing conversations...')
@@ -587,9 +590,9 @@ class ChatGptDriver:
         '''
         Refresh the chat page
         '''
-        if not self.driver.current_url.startswith(chatgpt_chat_url):
+        if not self.driver.current_url.startswith(self._chatgpt_chat_url):
             return self.logger.debug('Current URL is not chat page, skipping refresh')
 
-        self.driver.get(chatgpt_chat_url)
-        self.__check_capacity(chatgpt_chat_url)
+        self.driver.get(self._get_url())
+        self.__check_capacity(self._get_url())
         self.__check_blocking_elements()
