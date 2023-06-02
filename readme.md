@@ -40,6 +40,20 @@ response = llm('What is the age difference between Dua Lipa and her boyfriend?')
 print(response)
 ```
 
+## Plugin support
+
+List of plugin IDs can be [found here](https://github.com/acheong08/ChatGPT/blob/main/docs/plugins.json).
+
+```python
+llm = GPT4OpenAI(token=my_token, model='gpt-4',
+                 plugin_ids=['plugin-d1d6eb04-3375-40aa-940a-c2fc57ce0f51'] # Wolfram Alpha
+                 )
+
+# ChatGPT will use Wolfram Alpha plugin to calculate the equation
+response = llm('Calculate the square root of 12345 to 10 decimal places')
+print(response)
+```
+
 ## Langchain support
 
 `GPT4OpenAI` actually extends `LLM` class from `langchain.llms.base`. So you can easily use this library inside langchain ecosystem. Example:
@@ -72,10 +86,9 @@ AI: Ahoy, me name be John an' I be likin' ta feast on some pizza, arr!
 ## How to get the access token
 
 1. Go to https://chat.openai.com/api/auth/session
-2. Find the `__Secure-next-auth.session-token` cookie in `Application` > `Storage` > `Cookies` > `https://chat.openai.com`.
-3. Copy the value in the `Cookie Value` field.
+2. In the JSON, copy the whole `accessToken` field.
 
-![image](https://user-images.githubusercontent.com/19218518/206170122-61fbe94f-4b0c-4782-a344-e26ac0d4e2a7.png)
+![image](https://github.com/Erol444/gpt4-openai-api/assets/18037362/c0bdfd9c-8ad1-48ca-8344-621a4513e04b)
 
 ## OpenAI's GPT4 vs other providers
 
@@ -93,6 +106,5 @@ pip install gpt4-openai-api
 
 These dependencies get downloaded directly:
 
-- `undetected-chromedriver` (selenium browser)
-- `markdownify`
+- `revChatGPT` ([acheong08/ChatGPT](https://github.com/acheong08/ChatGPT))
 - `langchain`
