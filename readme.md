@@ -1,6 +1,6 @@
 # GPT4 OpenAI unofficial API
 
-## Unofficial GPT-4 API access via chat.openai.com using Selenium
+## Unofficial GPT-4 API access via chat.openai.com
 
 Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. If the account has `ChatGPT Plus`, you can use **GPT-4**.
 
