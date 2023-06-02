@@ -1,22 +1,20 @@
 from typing import Optional, List, Mapping, Any
 from time import sleep
-
 from langchain.llms.base import LLM
+from revChatGPT.V1 import Chatbot
 
-from .driver import ChatGptDriver
 
 class GPT4OpenAI(LLM):
 
     history_data: Optional[List] = []
     token : Optional[str]
-    chatbot : Optional[ChatGptDriver] = None
+    chatbot : Optional[Chatbot] = None
     call : int = 0
     conversation : Optional[str] = ""
     headless : bool = True
     __file__ = __file__
     model: str = "gpt-4"
 
-    #### WARNING : for each api call this library will create a new chat on chat.openai.com
     @property
     def _llm_type(self) -> str:
         return "custom"
@@ -31,9 +29,9 @@ class GPT4OpenAI(LLM):
                 raise ValueError("Need a token , check https://chat.openai.com/api/auth/session for get your token")
             else:
                 if self.conversation == "":
-                    self.chatbot = ChatGptDriver(self.token, headless=self.headless, model=self.model)
+                    self.chatbot = ChatGptDriver(self.token, model=self.model)
                 elif self.conversation != "" :
-                    self.chatbot = ChatGptDriver(self.token, headless=self.headless, model=self.model, conversation_id=self.conversation)
+                    self.chatbot = ChatGptDriver(self.token, model=self.model, conversation_id=self.conversation)
                 else:
                     raise ValueError("Something went wrong")
 
@@ -59,12 +57,3 @@ class GPT4OpenAI(LLM):
     def _identifying_params(self) -> Mapping[str, Any]:
         """Get the identifying parameters."""
         return {"model": "ChatGPT", "token": self.token}
-
-
-#llm = ChatGPT(token = "YOUR-COOKIE") #for start new chat
-
-#llm = ChatGPT(token = "YOUR-COOKIE", conversation = "Add-XXXX-XXXX-Convesation-ID") #for use a chat already started
-
-#print(llm("Hello, how are you?"))
-#print(llm("what is AI?"))
-#print(llm("Can you resume your previus answer?")) #now memory work well

@@ -2,13 +2,13 @@
 
 ## Unofficial GPT-4 API access via chat.openai.com using Selenium
 
-Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. It uses [selenium webdriver](https://www.selenium.dev/) to emulate user interaction on [chat.openai.com](chat.openai.com). If the account has `ChatGPT Plus`, the driver **will use GPT-4**, otherwise it will use the default GPT-3.5.
+Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. If the account has `ChatGPT Plus`, you can use **GPT-4**.
 
 It supports both **GPT4 browser and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4-browsing')`, or `model='gpt-4-plugins'`.
 
 **Note:** This unofficial API library is not endorsed by OpenAI and violates their Terms of Service. Use it at your own risk; the creator assumes no liability for any consequences. Please adhere to platform's ToS and exercise caution with unofficial resources.
 
-The core logic was taken from the [IntelligenzaArtificiale/Free-Auto-GPT](https://github.com/IntelligenzaArtificiale/Free-Auto-GPT).
+The core logic was taken from the [acheong08/ChatGPT](https://github.com/acheong08/ChatGPT).
 
 ## Demo
 
@@ -19,8 +19,8 @@ The core logic was taken from the [IntelligenzaArtificiale/Free-Auto-GPT](https:
 ```python
 from gpt4_openai import GPT4OpenAI
 
-# Token is the __Secure-next-auth.session-token from chat.openai.com
-llm = GPT4OpenAI(token=my_session_token, headless=False, model='gpt-4')
+# accessToken from https://chat.openai.com/api/auth/session
+llm = GPT4OpenAI(token=my_token, model='gpt-4')
 # GPT3.5 will answer 8, while GPT4 should be smart enough to answer 10
 response = llm('If there are 10 books in a room and I read 2, how many books are still in the room?')
 print(response)
@@ -33,8 +33,8 @@ As seen on the demo gif (above), GPT-4 answers correctly.
 ```python
 from gpt4_openai import GPT4OpenAI
 
-# Token is the __Secure-next-auth.session-token from chat.openai.com
-llm = GPT4OpenAI(token=my_session_token, headless=False, model='gpt-4-browsing')
+# accessToken from https://chat.openai.com/api/auth/session
+llm = GPT4OpenAI(token=my_token, model='gpt-4-browsing')
 # ChatGPT will first browse the web for the name/age of her boyfriend, then return the answer
 response = llm('What is the age difference between Dua Lipa and her boyfriend?')
 print(response)
@@ -57,8 +57,8 @@ human_message_prompt = HumanMessagePromptTemplate.from_template("{text}")
 
 chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, example_human, example_ai, human_message_prompt])
 
-# Token is the __Secure-next-auth.session-token from chat.openai.com
-llm = GPT4OpenAI(token=my_session_token)
+# accessToken from https://chat.openai.com/api/auth/session
+llm = GPT4OpenAI(token=my_token)
 
 chain = LLMChain(llm=llm, prompt=chat_prompt)
 print(chain.run("My name is John and I like to eat pizza."))
@@ -69,9 +69,9 @@ Output will be:
 AI: Ahoy, me name be John an' I be likin' ta feast on some pizza, arr!
 ```
 
-## How to get the session token
+## How to get the access token
 
-1. Go to https://chat.openai.com and open the developer tools by `F12`.
+1. Go to https://chat.openai.com/api/auth/session
 2. Find the `__Secure-next-auth.session-token` cookie in `Application` > `Storage` > `Cookies` > `https://chat.openai.com`.
 3. Copy the value in the `Cookie Value` field.
 
