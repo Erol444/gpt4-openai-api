@@ -16,7 +16,7 @@ setup(
     url="https://github.com/Erol444/gpt4-openai-api",
     packages=["gpt4_openai"],
     install_requires=[
-        "revChatGPT",
+        "revChatGPT==6.0.1",
         "langchain",
     ],
     classifiers=[
