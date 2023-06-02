@@ -14,8 +14,8 @@ human_message_prompt = HumanMessagePromptTemplate.from_template("{text}")
 
 chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, example_human, example_ai, human_message_prompt])
 
-# Token is the __Secure-next-auth.session-token from chat.openai.com
-llm = GPT4OpenAI(token=os.environ["OPENAI_SESSION_TOKEN"])
+# accessToken from https://chat.openai.com/api/auth/session
+llm = GPT4OpenAI(token=os.environ["OPENAI_ACCESS_TOKEN"])
 chain = LLMChain(llm=llm, prompt=chat_prompt)
 print(chain.run("My name is John and I like to eat pizza."))
 
