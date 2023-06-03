@@ -4,7 +4,7 @@
 
 Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. If the account has `ChatGPT Plus`, you can use **GPT-4**.
 
-It supports both **GPT4 browser and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4-browsing')`, or `model='gpt-4-plugins'`.
+It supports both **GPT4 browser and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4-browsing')`.
 
 **Note:** This unofficial API library is not endorsed by OpenAI and violates their Terms of Service. Use it at your own risk; the creator assumes no liability for any consequences. Please adhere to platform's ToS and exercise caution with unofficial resources.
 
