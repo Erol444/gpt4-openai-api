@@ -7,7 +7,7 @@ long_description = readme_file.read_text(encoding='utf-8')
 
 setup(
     name="gpt4-openai-api",
-    version="0.4.0",
+    version="0.5.0",
     description="Python package for unofficial GPT-4 API access via chat.openai.com",
     long_description=long_description,
     long_description_content_type='text/markdown',
