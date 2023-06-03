@@ -15,6 +15,7 @@ class GPT4OpenAI(LLM):
     __file__ = __file__
     model: str = "gpt-4"
     plugin_ids: List[str] = []
+    auto_continue: bool = False
 
     @property
     def _llm_type(self) -> str:
@@ -25,10 +26,15 @@ class GPT4OpenAI(LLM):
             if self.token is None:
                 raise ValueError("You need to specify the token, please check https://github.com/Erol444/gpt4-openai-api#how-to-get-the-access-token")
 
-            self.chatbot = Chatbot({'access_token': self.token, 'model': self.model, 'plugin_ids': self.plugin_ids})
+            self.chatbot = Chatbot({
+                'access_token': self.token,
+                'model': self.model,
+                'plugin_ids': self.plugin_ids
+                })
 
         response = ""
-        for data in self.chatbot.ask(prompt):
+        for data in self.chatbot.ask(prompt=prompt,
+                                     auto_continue=self.auto_continue):
             response = data["message"]
 
         # Add to history

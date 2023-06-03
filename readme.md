@@ -83,6 +83,15 @@ Output will be:
 AI: Ahoy, me name be John an' I be likin' ta feast on some pizza, arr!
 ```
 
+## `Continue generating` support
+
+In case of a large prompt answer, ChatGPT allows you to click `Continue generating` button. This library supports that as well.
+
+```python
+llm = GPT4OpenAI(llm=my_token, model='gpt-4', auto_continue=True)
+very_long_response = llm(my_prompt)
+```
+
 ## How to get the access token
 
 1. Go to https://chat.openai.com/api/auth/session
