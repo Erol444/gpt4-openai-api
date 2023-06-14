@@ -7,7 +7,7 @@ long_description = readme_file.read_text(encoding='utf-8')
 
 setup(
     name="gpt4-openai-api",
-    version="0.5.0",
+    version="0.6.0",
     description="Python package for unofficial GPT-4 API access via chat.openai.com",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -16,7 +16,7 @@ setup(
     url="https://github.com/Erol444/gpt4-openai-api",
     packages=["gpt4_openai"],
     install_requires=[
-        "revChatGPT==6.0.1",
+        "revChatGPT==6.2.2",
         "langchain",
     ],
     classifiers=[

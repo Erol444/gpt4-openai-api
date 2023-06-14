@@ -1,5 +1,4 @@
 from typing import Optional, List, Mapping, Any
-from time import sleep
 from langchain.llms.base import LLM
 from revChatGPT.V1 import Chatbot
 
@@ -34,7 +33,8 @@ class GPT4OpenAI(LLM):
 
         response = ""
         for data in self.chatbot.ask(prompt=prompt,
-                                     auto_continue=self.auto_continue):
+                                     auto_continue=self.auto_continue,
+                                     model=self.model):
             response = data["message"]
 
         # Add to history
