@@ -8,7 +8,7 @@ long_description = readme_file.read_text(encoding='utf-8')
 setup(
     name="gpt4-openai-api",
     version="0.8.0",
-    description="Python package for unofficial GPT-4 API access via chat.openai.com using Selenium browser",
+    description="Python package for unofficial GPT-4 API access via chat.openai.com using Chrome browser via Selenium",
     long_description=long_description,
     long_description_content_type='text/markdown',
     author="Erol444",
@@ -16,7 +16,7 @@ setup(
     url="https://github.com/Erol444/gpt4-openai-api",
     packages=["gpt4_openai"],
     install_requires=[
-        "undetected-chromedriver>=3.4.6",
+        "undetected-chromedriver>=3.5.3",
         "markdownify>=0.11.6",
         "langchain",
     ],
