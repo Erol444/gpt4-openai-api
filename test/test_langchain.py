@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+from dotenv import load_dotenv # pip install python-dotenv
 import os
 from gpt4_openai import GPT4OpenAI
 from langchain import LLMChain
@@ -14,8 +14,8 @@ human_message_prompt = HumanMessagePromptTemplate.from_template("{text}")
 
 chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, example_human, example_ai, human_message_prompt])
 
-# accessToken from https://chat.openai.com/api/auth/session
-llm = GPT4OpenAI(token=os.environ["OPENAI_ACCESS_TOKEN"])
+# Token is the __Secure-next-auth.session-token from chat.openai.com
+llm = GPT4OpenAI(token=os.environ["OPENAI_SESSION_TOKEN"], headless=False)
 chain = LLMChain(llm=llm, prompt=chat_prompt)
 print(chain.run("My name is John and I like to eat pizza."))
 
