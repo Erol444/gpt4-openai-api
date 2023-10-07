@@ -186,14 +186,12 @@ class ChatGptDriver:
 
         self.logger.debug('Initializing browser...')
         options = uc.ChromeOptions()
-        if self.__headless:
-            options.add_argument('--headless')
         if self.__proxy:
             options.add_argument(f'--proxy-server={self.__proxy}')
         for arg in self.__chrome_args:
             options.add_argument(arg)
         try:
-            self.driver = uc.Chrome(options=options, version_main=116)
+            self.driver = uc.Chrome(options=options, version_main=116, headless=self.__headless)
         except TypeError as e:
             if str(e) == 'expected str, bytes or os.PathLike object, not NoneType':
                 raise ValueError('Chrome installation not found')
