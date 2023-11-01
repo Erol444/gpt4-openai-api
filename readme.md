@@ -81,29 +81,6 @@ AI: Ahoy, me name be John an' I be likin' ta feast on some pizza, arr!
 
 Initially, I tried [poe.com ](https://poe.com/) (private API implemented at [gpt4free](https://github.com/gptforfree/gpt4free/tree/main/quora)), but noticed that input context window is smaller than one of OpenAI ChatGPT. And the same goes for Bing's GPT4.
 
-## Getting Started
-
-### Step 1: Clone the Repository
-Begin by cloning the repository to your local machine. Run the following commands in your terminal:
-
-```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/GPT4-OpenAI-Unofficial-API.git
-```
-
-Make sure to replace `YOUR_GITHUB_USERNAME` with your actual GitHub username. You can copy and paste the above code block directly into your README file where you want the `setup.py` instructions to appear.
-
-### Step 2: Navigate to the Directory
-Next, navigate into the directory you just created:
-
-```bash
-cd GPT4-OpenAI-Unofficial-API
-```
-
-### Step 3: Run the Setup Script
-```bash
-python setup.py install
-```
-
 ## Installation
 
 To install this Python package, run the following command:
