@@ -1,7 +1,7 @@
 from dotenv import load_dotenv # pip install python-dotenv
 import os
 from gpt4_openai import GPT4OpenAI
-from langchain import LLMChain
+from langchain.chains.LLMChain import LLMChain
 from langchain.prompts.chat import (ChatPromptTemplate, SystemMessagePromptTemplate, AIMessagePromptTemplate, HumanMessagePromptTemplate)
 
 load_dotenv()
@@ -18,4 +18,4 @@ chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, example_h
 llm = GPT4OpenAI(token=os.environ["OPENAI_SESSION_TOKEN"], headless=False)
 chain = LLMChain(llm=llm, prompt=chat_prompt)
 print(chain.run("My name is John and I like to eat pizza."))
-
+llm.close()
