@@ -12,7 +12,7 @@ The core logic was taken from the [IntelligenzaArtificiale/Free-Auto-GPT](https:
 
 ## Demo
 
-[![Demo GIF](https://user-images.githubusercontent.com/18037362/236707120-e93d40bc-b73b-4f72-bc7d-d0449a082946.gif)](https://youtu.be/71UL8TrE5Ls)
+[![Demo GIF](https://github.com/Erol444/gpt4-openai-api/assets/18037362/56e735bd-7e57-4dfc-b771-6a6fd1be2397)](https://youtu.be/71UL8TrE5Ls)
 
 ## Demo script
 
@@ -26,9 +26,9 @@ response = llm('If there are 10 books in a room and I read 2, how many books are
 print(response)
 ```
 
-As seen on the demo gif (above), GPT-4 answers correctly.
-
 ## DALL-E 3 support
+
+This code was used for the demo gif above.
 
 ```python
 from gpt4_openai import GPT4OpenAI

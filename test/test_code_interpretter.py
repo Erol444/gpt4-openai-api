@@ -7,7 +7,7 @@ load_dotenv()
 
 # Token is the __Secure-next-auth.session-token from chat.openai.com
 llm = GPT4OpenAI(token=os.environ["OPENAI_SESSION_TOKEN"],
-                headless=False,
+                headless=True,
                 # Either "text-davinci-002-render-sha" (GPT-3.5), "gpt-4", or "gpt-4-plugins"
                 model='gpt-4')
 
