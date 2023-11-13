@@ -7,7 +7,7 @@ long_description = readme_file.read_text(encoding='utf-8')
 
 setup(
     name="gpt4-openai-api",
-    version="0.8.1",
+    version="0.9.0",
     description="Python package for unofficial GPT-4 API access via chat.openai.com using Chrome browser via Selenium",
     long_description=long_description,
     long_description_content_type='text/markdown',

@@ -17,3 +17,4 @@ response = llm(prompt)
 
 # GPT4 should now return all 15 different steps of the business plan, one by one
 print(response)
+llm.close()
