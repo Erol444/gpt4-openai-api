@@ -4,7 +4,7 @@
 
 Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. It uses [selenium webdriver](https://www.selenium.dev/) to emulate user interaction on [chat.openai.com](chat.openai.com). If the account has `ChatGPT Plus`, the driver **will use GPT-4**, otherwise it will use the default GPT-3.5.
 
-It supports both **GPT4 browser and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4-browsing')`, or `model='gpt-4-plugins'`.
+It supports both **GPT4 browser, DALL-E 3, and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4')`, or `model='gpt-4-plugins'`.
 
 **Note:** This unofficial API library is not endorsed by OpenAI and violates their Terms of Service. Use it at your own risk; the creator assumes no liability for any consequences. Please adhere to platform's ToS and exercise caution with unofficial resources.
 
@@ -12,7 +12,7 @@ The core logic was taken from the [IntelligenzaArtificiale/Free-Auto-GPT](https:
 
 ## Demo
 
-![Demo GIF](https://user-images.githubusercontent.com/18037362/236707120-e93d40bc-b73b-4f72-bc7d-d0449a082946.gif)
+[![Demo GIF](https://user-images.githubusercontent.com/18037362/236707120-e93d40bc-b73b-4f72-bc7d-d0449a082946.gif)](https://youtu.be/71UL8TrE5Ls)
 
 ## Demo script
 
@@ -27,6 +27,18 @@ print(response)
 ```
 
 As seen on the demo gif (above), GPT-4 answers correctly.
+
+## DALL-E 3 support
+
+```python
+from gpt4_openai import GPT4OpenAI
+
+llm = GPT4OpenAI(token=my_session_token, headless=False,
+                model='gpt-4' # DALL-E 3 only works with gpt-4
+                )
+
+img_bytes = llm.generate_image('Generate an isometric image of a cute doggo inside a house.', image_path = './img_save_path.png')
+```
 
 ## Browsing support
 
