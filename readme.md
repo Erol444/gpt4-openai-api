@@ -2,6 +2,10 @@
 
 ## Unofficial GPT-4 API access via chat.openai.com using Selenium
 
+> ⚠️ **Note** To use hosted **API for GPT4o Search** we recommend using [Apify actor](https://console.apify.com/actors/NBZPJfTcVDbrsa08T/), as it's hosted, more stable, and faster. **Price**: $10/1000 answers.
+
+#### Selenium-based API
+
 Have you **applied to GPT-4 API access** but **OpenAI is too busy to reply**? Me too, that's why I created this package. It uses [selenium webdriver](https://www.selenium.dev/) to emulate user interaction on [chat.openai.com](chat.openai.com). If the account has `ChatGPT Plus`, the driver **will use GPT-4**, otherwise it will use the default GPT-3.5.
 
 It supports both **GPT4 browser, DALL-E 3, and plugins** by selecting model via `GPT4OpenAI(token=token, model='gpt-4')`, or `model='gpt-4-plugins'`.
