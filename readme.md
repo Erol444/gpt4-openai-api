@@ -2,7 +2,7 @@
 
 ## Unofficial GPT-4 API access via chat.openai.com using Selenium
 
-> ⚠️ **Note** To use hosted **API for GPT4o Search** we recommend using [Apify actor](https://console.apify.com/actors/NBZPJfTcVDbrsa08T/), as it's hosted, more stable, and faster. **Price**: $10/1000 answers.
+> ⚠️ **Note** To use hosted **API for GPT4o Search** we recommend using [Apify actor](https://apify.com/openapi/gpt-search-private-api), as it's hosted, more stable, and faster. **Price**: $10/1000 answers.
 
 #### Selenium-based API
 
